@@ -1,0 +1,88 @@
+#!/bin/bash
+
+#
+# Copyright 2013 Zynga Inc.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+# 
+#    http://www.apache.org/licenses/LICENSE-2.0
+# 
+#    Unless required by applicable law or agreed to in writing, software
+#      distributed under the License is distributed on an "AS IS" BASIS,
+#      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
+# 
+
+#
+# description: add-game-worker
+#
+# Get function from functions library
+. /etc/init.d/functions
+
+pidfile="/var/run/add-game-worker.pid"
+script="php /var/www/html/zperfmon/apis/add-game-worker.php"
+lockfile="/var/lock/subsys/add-game-worker"
+prog="add-game-worker"
+
+# Start the service add-game-worker
+start() {
+        echo -n "Starting add-game-worker: "
+        #daemon $script --pidfile $pidfile &
+        daemon $script -P $pidfile &
+        retval=$?
+        if [ $retval -eq 0 ]
+        then
+                touch $lockfile
+                success $"add-game-worker startup"
+                echo_success
+                echo
+        else
+                echo_failure
+                echo
+        fi
+
+        return $retval
+}
+
+# Stop the service add-game-worker
+stop() {
+        echo -n "Stopping add-game-worker: "
+        #pid=$(<$pidfile)i
+        killproc -p $pidfile $prog
+        retval=$?
+        if [ ! $retval -eq 0 ]
+        then
+                echo failure
+                echo
+                return
+        fi
+
+        test -e $pidfile && rm -f $pidfile
+        echo_success
+        echo
+        return
+}
+
+### main logic ###
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status $prog
+        ;;
+  restart|reload|condrestart)
+        stop
+        start
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart|reload|status}"
+        exit 1
+esac
+exit 0

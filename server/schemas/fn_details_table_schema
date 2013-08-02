@@ -1,0 +1,41 @@
+top5_functions_30min;
+
+timestamp	TIMESTAMP
+function	VARCHAR(256)
+page		VARCHAR(256)
+count		INT
+incl_time	INT
+excl_time	INT
+
+
+#-------##-------##-------##-------#
+
+Top 5 functions by count for all pages at 123689
+
+SELECT function, count 
+FROM fn_detail_table 
+WHERE timestamp = 123689 AND page = "all"
+ORDER BY count DESC 
+LIMIT 5;
+
+Top 5 functions by exclusive wall time for gateway.php pages at 777777
+
+SELECT function, count 
+FROM fn_detail_table 
+WHERE timestamp = 777777 AND page = "gateway.php"
+ORDER BY excl_time DESC 
+LIMIT 5;
+
+
+123124235 MC::Get	gateway.php	4	230    150.48484
+123124235 MC::Get	gateway.php	4	230    150.48484
+
+
+tracked_functions_30min;
+
+timestamp	TIMESTAMP
+function	VARCHAR(256)
+page		VARCHAR(256)
+count		INT
+incl_time	INT
+excl_time	INT

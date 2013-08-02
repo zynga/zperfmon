@@ -1,0 +1,19 @@
+We keep only a day worth of failed uploads on the host.
+
+--
+
+The profile upload cron job runs 4 times every hour. Once each at 55th
+and 25th minute, and once each at a 5 minute boundary between 55-25
+and 25-55 minutes.
+
+--
+
+PROFILE_CLI_BY_DEFAULT
+	- Ignored by non-CLI invocations. For CLI invocations, if set
+	profile on/off check will be done at app init and app exit. If
+	set to false, profiling on/off check will be done on calls to
+	zperfmon_enable() and zperfmon_disable().
+
+DISABLE_APC
+	- Don't use APC even if loaded. Use case of CLI app profiling
+	and multiple processes involved in profile collection.

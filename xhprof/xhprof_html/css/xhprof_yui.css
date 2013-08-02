@@ -1,0 +1,79 @@
+
+/*
+ * Copyright (c) 2010 Zynga
+ *
+ * YUI table support for xhprof flat profile rendering.
+ */
+
+#show_checkbox
+{
+	margin: 0px;
+	position: absolute;
+	top: 200px;
+	left:1350px;
+	z-index: 10003;
+}
+.hide 
+{
+	display:none;
+}
+.yui-dt-first
+{
+}
+.yui-skin-sam .yui-dt td
+{
+	text-align:right;
+}
+iframe { 
+overflow-x: hidden; 
+overflow-y: hidden; 
+}
+.right{
+	text-align:right;
+}
+.left{
+ 	text-align:left;
+}
+.summary tr:nth-child(odd) {background: #EDF5FF;}
+.summary tr:nth-child(even) {background: white;}
+.ui-dialog{left:600px;}
+#function_table table{
+margin: 30px;
+}
+.red{
+color:red;
+}
+.green{
+color:green;
+}
+ .title {
+font-family: 'Michroma';
+font-size: 40px;
+font-weight: bold;
+color: #999;
+}
+.left {
+float: left;
+}
+.right {
+float: right;
+.summary tr th{
+text-align: center;
+}
+
+.summary tr td{
+padding-right:10px;
+}
+.summary td.vbar, th.vbar{
+border-left:none;
+}
+.summary td.vrbar, th.vrbar{
+border-left:none;
+}
+.summary td.vgbar, th.vgbar{
+border-left:none;
+}
+#link_address_anchor{
+font-size:18px;
+color:#555;
+}

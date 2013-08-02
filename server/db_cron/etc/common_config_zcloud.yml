@@ -1,0 +1,321 @@
+common_web_eu: &common_web_eu
+
+    cpu:
+      vertica_plugin:    cpu-1_cpu-idle
+      metric:            value
+      mysql_column_name: cpu_idle
+      max_threshold:     95
+      min_threshold:     65
+      max_value:         100
+      complement:        true
+      optimal_pct:       90
+
+    mem:
+      vertica_plugin:    memory_memory-free
+      mysql_column_name: mem_free
+      metric:            value
+#     max_threshold:     24159191040 # 22.5G
+#     min_threshold:     12348030976 # 50%
+      max_value:         24696061952 # 23G
+      complement:        true
+      optimal_pct:       80
+
+    mem_used:
+      vertica_plugin:    memory_memory-used
+      mysql_column_name: mem_used
+      metric:            value
+      max_threshold:     23085449216 # 21.5G
+      min_threshold:     11811160064 # 50%
+      max_value:         23622320128 # 22G
+      complement:        false
+      optimal_pct:       95
+
+    rps: &rps
+      vertica_plugin:    apache-apache_requests
+      metric:            count
+      mysql_column_name: rps      
+
+common_mc_eu: &common_mc_eu
+
+    gets: 
+      vertica_plugin:    memcached_memcached_command-get
+      mysql_column_name: gets
+      metric:            value
+
+    sets: 
+      vertica_plugin:    memcached_memcached_command-set
+      mysql_column_name: sets
+      metric:            value
+
+    df_cache:
+      vertica_plugin:    memcached_df-cache
+      mysql_column_name: df_cache_used
+      metric:            used
+      max_value:         73014444032 # 68G
+      max_threshold:     70866960384 # 66G
+      min_threshold:     53687091200 # 50G
+      optimal_pct:       90
+      complement:        false
+
+    nw_pkts_rx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_rx
+      metric:            rx
+      max_threshold:     100000 
+      min_threshold:     40000
+      complement:        false
+      optimal_pct:       60
+
+    nw_pkts_tx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_tx
+      metric:            tx
+      max_threshold:     100000
+      min_threshold:     40000
+      complement:        false
+      optimal_pct:       60
+
+    nw_octets_tx:
+      vertica_plugin:    interface_if_octets-eth0
+      mysql_column_name: nw_octets_tx
+      metric:            tx
+      max_threshold:     943718400
+      min_threshold:     314572800
+      complement:        false
+      optimal_pct:       50 
+
+    nw_octets_rx:
+      vertica_plugin:    interface_if_octets-eth0
+      mysql_column_name: nw_octets_rx
+      metric:            rx
+      max_threshold:     943718400
+      min_threshold:     314572800
+      complement:        false
+      optimal_pct:       50
+
+common_mb_eu: &common_mb_eu
+    <<: *common_mc_eu
+
+    nw_octets_tx:
+      vertica_plugin:    interface_if_octets-eth0
+      mysql_column_name: nw_octets_tx
+      metric:            tx
+      max_threshold:     671088640  # 80 MBps   old value -> 838860800  800Mbps    
+      min_threshold:     223696214  # 1/3rd     old value -> 279620267  1/3rd 
+      complement:        false 
+      optimal_pct:       59
+
+    nw_octets_rx:
+      vertica_plugin:    interface_if_octets-eth0
+      mysql_column_name: nw_octets_rx
+      metric:            rx
+      max_threshold:     671088640  # 80 MBps   old value -> 838860800  800Mbps    
+      min_threshold:     223696214  # 1/3rd     old value -> 279620267  1/3rd 
+      complement:        false 
+      optimal_pct:       59
+
+    mem:
+      vertica_plugin:    memory_memory-used
+      mysql_column_name: mem_used
+      metric:            value
+      max_threshold:     62062277427 # 85%
+      min_threshold:     51110110822 # 70%
+      max_value:         73014444032 # 68 G
+      complement:        false
+      optimal_pct:       90
+
+common_db_eu: &common_db_eu
+
+    cpu:
+      vertica_plugin:    cpu-0_cpu-idle
+      metric:            value
+      mysql_column_name: cpu_idle
+      max_threshold:     65
+      min_threshold:     35
+      max_value:         100
+      complement:        true
+      optimal_pct:       50
+
+    xvda_disk_ops_read:
+      vertica_plugin:    disk-xvda_disk_ops
+      mysql_column_name: xvda_disk_ops_read
+      metric:            read
+      max_value:         3408
+      max_threshold:     3238
+      min_threshold:     2726
+      complement:        false
+      optimal_pct:       92
+
+    xvda_disk_ops_write:
+      vertica_plugin:    disk-xvda_disk_ops
+      mysql_column_name: xvda_disk_ops_write
+      metric:            write
+      max_value:         2627
+      max_threshold:     2496
+      min_threshold:     2102
+      complement:        false
+      optimal_pct:       92
+
+    nw_pkts_rx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_rx
+      metric:            rx
+      max_threshold:     100000
+      min_threshold:     60000
+      complement:        false
+      optimal_pct:       60
+
+    nw_pkts_tx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_tx
+      metric:            tx
+      max_threshold:     100000
+      min_threshold:     60000
+      complement:        false
+      optimal_pct:       60
+
+    nw_octets_tx:
+      vertica_plugin:    interface_if_octets-eth0
+      mysql_column_name: nw_octets_tx
+      metric:            tx
+      max_threshold:     943718400
+      min_threshold:     314572800
+      complement:        false
+      optimal_pct:       50
+
+    nw_octets_rx:
+      vertica_plugin:    interface_if_octets-eth0
+      mysql_column_name: nw_octets_rx
+      metric:            rx
+      max_threshold:     943718400
+      min_threshold:     314572800
+      complement:        false
+      optimal_pct:       50
+
+
+common_proxy_eu: &common_proxy_eu
+
+    nw_octets_rx:
+      vertica_plugin:    interface_if_octets-eth0
+      mysql_column_name: nw_pkts_rx
+      metric:            rx
+      max_threshold:     943718400 
+      min_threshold:     314572800
+      complement:        false
+      optimal_pct:       50
+
+    nw_octets_tx:
+      vertica_plugin:    interface_if_octets-eth0
+      mysql_column_name: nw_pkts_tx
+      metric:            tx
+      max_threshold:     943718400
+      min_threshold:     314572800
+      complement:        false
+      optimal_pct:       50
+
+    cpu:
+      vertica_plugin:    cpu-0_cpu-idle
+      metric:            value
+      mysql_column_name: cpu_idle
+      max_threshold:     80
+      min_threshold:     20
+      max_value:         100
+      complement:        true
+      optimal_pct:       50
+
+    request_errors:
+      vertica_plugin:    haproxy_counter-FRONTEND_request
+      metric:            value
+      mysql_column_name: request_errors
+      max_threshold:     90
+      min_threshold:     10
+      complement:        false
+      optimal_pct:       10
+
+common_msched_eu: &common_msched_eu
+
+    nw_pkts_rx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_rx
+      metric:            rx
+
+    nw_pkts_tx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_tx
+      metric:            tx
+
+    cpu:
+      vertica_plugin:    cpu-0_cpu-idle
+      metric:            value
+      mysql_column_name: cpu_idle
+      max_threshold:     75
+      min_threshold:     30
+      max_value:         100
+      complement:        true
+      optimal_pct:       50
+
+
+common_mqueue_eu: &common_mqueue_eu
+
+    nw_pkts_rx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_rx
+      metric:            rx
+
+    nw_pkts_tx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_tx
+      metric:            tx
+
+common_nagios_eu: &common_nagios_eu
+
+    nw_pkts_rx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_rx
+      metric:            rx
+
+    nw_pkts_tx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_tx
+      metric:            tx
+
+common_consumer_eu: &common_consumer_eu
+
+    cpu:
+      vertica_plugin:    cpu-1_cpu-idle
+      metric:            value
+      mysql_column_name: cpu_idle
+      max_threshold:     90
+      min_threshold:     60
+      max_value:         100
+      complement:        true
+      optimal_pct:       85
+
+    mem:
+      vertica_plugin:    memory_memory-used
+      mysql_column_name: mem_used
+      metric:            value
+      max_threshold:     23085449216 # 21 .5G 
+      min_threshold:     11811160064 # 50%
+      max_value:         23622320128 # 22G
+      complement:        false
+      optimal_pct:       90
+
+    nw_pkts_rx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_rx
+      metric:            rx
+
+    nw_pkts_tx:
+      vertica_plugin:    interface_if_packets-eth0
+      mysql_column_name: nw_pkts_tx
+      metric:            tx
+      max_threshold:     100000
+      min_threshold:     60000 
+      complement:        false  
+      optimal_pct:       60
+
+    load:
+      vertica_plugin:    load-load
+      metric:            longterm
+common_gib_web: &common_gib_web

@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<!--                                                                                    -->
+<!--  Copyright 2013 Zynga Inc.								-->
+<!--  											-->
+<!--  Licensed under the Apache License, Version 2.0 (the "License");			-->
+<!--     you may not use this file except in compliance with the License.		-->
+<!--     You may obtain a copy of the License at					-->
+<!--  											-->
+<!--     http://www.apache.org/licenses/LICENSE-2.0					-->
+<!--  											-->
+<!--     Unless required by applicable law or agreed to in writing, software		-->
+<!--       distributed under the License is distributed on an "AS IS" BASIS,		-->
+<!--       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	-->
+<!--     See the License for the specific language governing permissions and		-->
+<!--     limitations under the License.							-->
+<!--                                                                                    -->   
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>zPerfmon: Business Dashboard</title>
+</head>
+
+<body>
+	<div class="container" id="tab-bd">
+		<div class="menu-wrapper">
+			<ul class="menu">
+				<li class="button"><a class="menu-item-0 current" href=#>Instance Counts</a></li>
+				<li class="button"><a class="menu-item-1" href=#>DAU/Instance type</a></li>
+			</ul>
+		</div>
+
+		<div class="left-column">
+			<div class="select-chart-items">
+				<div class="select-items-0 selected">
+					<!--<div class="title">Instance Counts</div>-->
+					<div class="list">
+						<div>
+							<input type="checkbox" id="DAU" checked="true"/>
+							<label for="DAU">DAU</label>
+						</div>
+						<div>
+							<input type="checkbox" id="web_count" checked="true"/>
+							<label for="web_count">Web instance count</label>
+						</div>
+						<div>
+							<input type="checkbox" id="db_count"  />
+							<label for="db_count">Mysql instance count</label>
+						</div>
+						<div>
+							<input type="checkbox" id="mc_count"  />
+							<label for="mc_count">Memcache instance count</label>
+						</div>
+						<div>
+							<input type="checkbox" id="mb_count" />
+							<label for="mb_count">Membase instance count</label>
+						</div>
+						<div>
+							<input type="checkbox" id="proxy_count" />
+							<label for="proxy_count">Proxy instance count</label>
+						</div>
+						<div>
+							<input type="checkbox" id="admin_count" />
+							<label for="admin_count">Admin instance count</label>
+						</div>
+						<div>
+							<input type="checkbox" id="queue_count" />
+							<label for="queue_count">Queue instance count</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="select-items-1 hide">
+					<!--<div class="title">DAU/Instance type</div>-->
+					<div class="list">
+						<div>
+							<input type="checkbox" id="dau_all_count" checked="true"/>
+							<label for="dau_all_count">DAU/All Machines</label>
+                        </div>
+						<div>
+							<input type="checkbox" id="dau_web_count"  checked="true"/>
+							<label for="dau_web_count">DAU/Web instance</label>
+						</div>
+						<div>
+							<input type="checkbox" id="dau_db_count"  />
+							<label for="dau_db_count">DAU/MySQL instance</label>
+						</div>
+						<div>
+							<input type="checkbox" id="dau_mc_count"  />
+							<label for="dau_mc_count">DAU/Memcache</label>
+						</div>
+						<div>
+							<input type="checkbox" id="dau_mb_count"  />
+							<label for="dau_mb_count">DAU/Membase</label>
+						</div>
+						<div>
+							<input type="checkbox" id="dau_proxy_count" />
+							<label for="dau_proxy_count">DAU/Proxy</label>
+						</div>
+						<div>
+							<input type="checkbox" id="dau_admin_count" />
+							<label for="dau_admin_count">DAU/Admin</label>
+						</div>
+						<div>
+							<input type="checkbox" id="dau_queue_count" />
+							<label for="dau_queue_count">DAU/Queue</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<button class="split-chart-btn">Split Charts</button>
+				<div class="split-chart-controller hide">
+					<div><input type=radio name=tab-bd-split-view-mode value=overall checked />Overall</div>
+					<div><input type=radio name=tab-bd-split-view-mode value=dodwow />DoD & WoW</div>
+				</div>
+			</div>
+
+			<div>
+				<button class="show-table-btn">Show Table</button>
+			</div>
+		</div>
+	
+		<div class="right-column">
+			<div class="chart-wrapper left">
+				<div class="combined-charts chart-block"></div>
+				<div class="split-charts hide"></div>
+			</div>
+			<div class="tags-wrapper left">
+            </div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="clear"></div>
+	</div>
+
+	<div id="tab-bd-dialog" title="Profile Info"></div>
+
+	<div id="tab-bd-table" class="yui-skin-sam"></div>
+
+<script>
+(function() {
+	var game = $('#GameList option:selected').val();
+	var arrayid = $('#ArrayList option:selected').val();
+	var gameParam = "game=" + game;
+	if(arrayid !== "all") { //if arrayid is given, append it to the game parameter to get array specific data
+		gameParam += "&array=" + arrayid;
+	}
+
+	var apiUrlArr = [
+		'bd-view/get_bd_data.php?query=bd_chart_range&' + gameParam,
+		'bd-view/get_bd_data.php?query=bd_chart_range_per_dau&' + gameParam
+	];
+
+	var oControl = new zPerfmon.Main(game, arrayid, 'tab-bd', apiUrlArr);
+})();
+</script>
+
+</body>
+</html>

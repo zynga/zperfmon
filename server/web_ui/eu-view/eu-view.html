@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<!--                                                                                    -->
+<!--  Copyright 2013 Zynga Inc.								-->
+<!--  											-->
+<!--  Licensed under the Apache License, Version 2.0 (the "License");			-->
+<!--     you may not use this file except in compliance with the License.		-->
+<!--     You may obtain a copy of the License at					-->
+<!--  											-->
+<!--     http://www.apache.org/licenses/LICENSE-2.0					-->
+<!--  											-->
+<!--     Unless required by applicable law or agreed to in writing, software		-->
+<!--       distributed under the License is distributed on an "AS IS" BASIS,		-->
+<!--       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	-->
+<!--     See the License for the specific language governing permissions and		-->
+<!--     limitations under the License.							-->
+<!--                                                                                    -->   
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>zPerfmon: EU Dashboard</title>
+</head>
+
+<body>
+	<div class="container" id="tab-eu">
+		<div class="menu-wrapper">
+			<ul class="menu">
+				<li class="button"><a class="menu-item-0 current" href=#>Web</a></li>
+				<li class="button"><a class="menu-item-1" href=#>Memcache</a></li>
+				<li class="button"><a class="menu-item-2" href=#>MySQL</a></li>
+				<li class="button"><a class="menu-item-3" href=#>Membase user-a</a></li>
+			</ul>
+		</div>
+
+		<div class="left-column">
+			<div class="select-chart-items">
+				<div class="select-items-0 selected">
+					<!--<div class="title">Web EU</div>-->
+					<div class="list">
+						<div>
+							<input type="checkbox" id="web_cpu" checked />
+							<label for "web_cpu">CPU</label>
+						</div>
+						<div>
+							<input type="checkbox" id="web_mem" checked/>
+							<label for "web_mem">Memory</label>
+						</div>
+						<div>
+							<input type="checkbox" id="web_rps" />
+							<label for "web_rps">RPS</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="select-items-1 hide">
+					<!--<div class="title">Memcache EU</div>-->
+					<div class="list">
+						<div>
+                            <input type="checkbox" id="mc_user_df_cache_used" checked />
+                            <label for "mc_user_df_cache_used">DF Cache Used</label>
+                        </div>
+						<div>
+							<input type="checkbox" id="mc_user_sets" />
+							<label for="mc_user_sets">Ops Sets</label>
+						</div>
+						<div>
+							<input type="checkbox" id="mc_user_gets" />
+							<label for="mc_user_gets">Ops Gets</label>
+						</div>
+						<div>
+							<input type="checkbox" id="mc_user_nw_pkts_rx" />
+							<label for="mc_user_nw_pkts_rx">N/W PKTS Received</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="select-items-2 hide">
+					<!--<div class="title">MySQL EU</div>-->
+					<div class="list">
+						<div>
+							<input type="checkbox" id="db_a_cpu" checked="true"/>
+							<label for="db_a_cpu">CPU</label>
+						</div>
+						<div>
+							<input type="checkbox" id="db_a_md0_disk_ops_read"  checked="true"/>
+							<label for="db_a_md0_disk_ops_read">MD0 Disk Ops Read</label>
+						</div>
+						<div>
+							<input type="checkbox" id="db_a_md0_disk_ops_write"  checked="true"/>
+							<label for="db_a_md0_disk_ops_write">MD0 Disk Ops Write</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="select-items-3 hide">
+					<!--<div class="title">Membase EU</div>-->
+					<div class="list">
+						<div>
+							<input type="checkbox" id="mb_user_a_sets"  checked="true"/>
+							<label for="mb_user_a_sets">Ops Sets</label>
+						</div>
+						<div>
+							<input type="checkbox" id="mb_user_a_gets"  checked="true"/>
+							<label for="mb_user_a_gets">Ops Gets</label>
+						</div>
+						<div>
+							<input type="checkbox" id="mb_user_a_nw_pkts_rx"  checked="true"/>
+							<label for="mb_user_a_nw_pkts_rx">N/W PKTS Received</label>
+						</div>
+						<div>
+							<input type="checkbox" id="mb_user_a_nw_pkts_tx"  checked="true"/>
+							<label for="mb_user_a_nw_pkts_tx">N/W PKTS Transfered</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<button class="split-chart-btn">Split Charts</button>
+				<div class="split-chart-controller hide">
+					<div><input type=radio name=tab-eu-split-view-mode value=overall checked />Overall</div>
+					<div><input type=radio name=tab-eu-split-view-mode value=dodwow />DoD & WoW</div>
+				</div>
+			</div>
+
+			<div>
+				<button class="show-table-btn">Show Table</button>
+			</div>
+		</div>
+	
+		<div class="right-column">
+			<div class="chart-wrapper left">
+				<div class="combined-charts chart-block"></div>
+				<div class="split-charts hide"></div>
+			</div>
+			<div class="tags-wrapper left">
+            </div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="clear"></div>
+	</div>
+
+	<div id="tab-eu-dialog" title="Profile Info"></div>
+
+	<div id="tab-eu-table" class="yui-skin-sam"></div>
+
+<script>
+(function() {
+	var game = $('#GameList option:selected').val();
+	var arrayid = $('#ArrayList option:selected').val();
+	var gameParam = "game=" + game;
+	if(arrayid !== "all") { //if arrayid is given, append it to the game parameter to get array specific data
+		gameParam += "&array=" + arrayid;
+	}
+
+	var apiUrlArr = [
+		'eu-view/eu-query.php?query=eu_web_chart_range&' + gameParam,
+		'eu-view/eu-query.php?query=eu_mc_chart_range&' + gameParam,
+		'eu-view/eu-query.php?query=eu_db_chart_range&' + gameParam,
+		'eu-view/eu-query.php?query=eu_mb_chart_range&' + gameParam
+	];
+
+	var oControl = new zPerfmon.Main(game, arrayid, 'tab-eu', apiUrlArr);
+})();
+</script>
+
+</body>
+</html>

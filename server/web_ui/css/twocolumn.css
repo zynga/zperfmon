@@ -1,0 +1,144 @@
+
+body_top {
+	margin:0px;
+	padding:0px;
+	font-family:verdana, arial, helvetica, sans-serif;
+	color:#333;
+	background:white url(../images/main_bg_red.jpg) top repeat-x;
+	}
+
+/ * body { margin:0; padding:0; width:100%; background:#fff url(../images/main_bg_red.jpg) top repeat-x; 
+}*/
+
+
+hidden { 
+	display: none;
+}
+
+smallfont { 
+  font:11px/20px verdana, arial, helvetica, sans-serif;
+}
+
+h1 {
+	margin:0px 0px 15px 0px;
+	padding:0px;
+	font-size:28px;
+	line-height:28px;
+	font-weight:900;
+	color:#ccc;
+	}
+
+select,li { 
+	font:11px/20px verdana, arial, helvetica, sans-serif;
+ }
+
+span { 
+	font:14px/20px verdana, arial, helvetica, sans-serif;
+ }
+
+#SidePaneSubHeader { 
+	font:14px/20px helvetica, sans-serif;
+}
+
+#SidePaneHeader { 
+	font:20px/20px verdana, arial, helvetica, sans-serif;
+}
+
+#SidePaneEntries { 
+	font:11px/20px verdana, arial, helvetica, sans-serif;
+}
+
+div.ui-datepicker{
+	margin:1px 1px 1px 1px;
+	padding:1px;	
+	font:9px verdana, arial, helvetica, sans-serif;
+}
+
+p {
+	font:11px/20px verdana, arial, helvetica, sans-serif;
+	margin:0px 0px 16px 0px;
+	padding:0px;
+}
+
+#MainPane>p {margin:0px;}
+#MainPane>p+p {text-indent:30px;}
+
+a {
+	color:#09c;
+	font-size:11px;
+	text-decoration:none;
+	font-weight:600;
+	font-family:verdana, arial, helvetica, sans-serif;
+	}
+a:link {color:#09c;}
+a:visited {color:#07a;}
+a:hover {background-color:#fee;}
+
+.ui-tabs .ui-tabs-panel {
+  padding: 0.3em;
+}
+
+#Separator {
+	margin:0px 0px 0px 0px;
+	/* For IE5/Win's benefit height = [correct height] + [top padding] + [top and bottom border widths] */
+	height:1.5em; /* 14px + 17px + 2px = 33px */
+	border-style:solid;
+	border-color:black;
+	border-width:0px 0px; /* top and bottom borders: 1px; left and right borders: 0px */
+	line-height:0px;
+
+	font:12px/14px helvetica, sans-serif;
+
+/* Here is the ugly brilliant hack that protects IE5/Win from its own stupidity. 
+Thanks to Tantek Celik for the hack and to Eric Costello for publicizing it. 
+IE5/Win incorrectly parses the "\"}"" value, prematurely closing the style 
+declaration. The incorrect IE5/Win value is above, while the correct value is 
+below. See http://glish.com/css/hacks.asp for details. */
+	voice-family: "\"}\"";
+	voice-family:inherit;
+	height: 1.6em; /* the correct height */
+	width: 100%;
+}
+
+/* I've heard this called the "be nice to Opera 5" rule. Basically, it feeds correct 
+length values to user agents that exhibit the parsing error exploited above yet get 
+the CSS box model right and understand the CSS2 parent-child selector. ALWAYS include
+a "be nice to Opera 5" rule every time you use the Tantek Celik hack (above). */
+body>#Header {height:8px;}
+
+#MainPane {
+    float: right;
+    padding:10px;
+    width: 75%;
+    height: 300px;
+    clear: right;
+}
+
+#MainPaneTable {
+    float: right;
+    width: 75%;
+    height: 300px;
+    margin-top: 24px;
+}
+
+iframe {
+	z-index: 9;
+}
+
+#SidePane {
+	width:20%;
+	line-height:12px;
+/* Again, the ugly brilliant hack. */
+	voice-family: "\"}\"";
+	voice-family:inherit;
+   float: left;
+}
+
+.spacer { clear: both; display: block; width: 100%; }
+
+/* Again, "be nice to Opera 5". */
+body>#SidePane {width:20%;}
+
+#refresh-tabs, #web-help {
+	float: right;
+}

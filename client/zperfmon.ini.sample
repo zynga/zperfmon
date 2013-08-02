@@ -1,0 +1,45 @@
+; How often to dump profile, default is every 60 seconds
+XHPROF_PROBE_INTERVAL=60;
+
+; The ID assigned to the game for tracking
+ZPERFMON_GAME_ID=42;
+
+; Name of the game as understood by zperfmon server
+ZPERFMON_GAME_NAME="fluid";
+
+; The URL at which zperfmon server is installed
+ZPERFMON_UPLOAD_URL="http://xxxxxx/zperfmon/uploader.php";
+
+; A list of URL parameters, values of which will be prepended to the page name
+; Keep this empty if not used
+; ZPERFMON_URL_PARAMS="UPARAM1,UPARAM2";
+
+; The constants below are meant for dev setup only
+
+; A list of time slots for which memory profilling will be set on
+ZPERFMON_MEM_SLOTS=8;
+
+; Time by which we start profiling before the memory profiling enabled time slot. 
+ZPERFMON_SLOW_PAGE_THRESHOLD=5;
+
+; Variable to figure out if we have to append Hostname to profiles
+ZPERFMON_APPEND_HOSTNAME=false;
+
+; Per page defined constant which is to be appended to file name
+; Keep this empty if not used
+ZPERFMON_PAGE_PARAMS="PPARAM1,PPARAM2"
+
+; If we dont need the hash data collected, set this to false
+ZPERFMON_HASH_DATA = true;
+
+;DISABLE_APC=true
+
+; A list of pages that must be profiled in a half-hour timeslot
+; Format is: <page name 1>:<count 1>,<page name 2>:<count 2>,...
+; page name can include url parameter(s) used to key the profile dump. 
+;
+; This works as a guarantee and throttle. Within a fuzziness range, a page
+; appearing in the list will not occur more times than specified and will occur
+; as many times as specified.
+;
+; ZPERFMON_PROFILE_CONF="one.php:1,two.php:2"

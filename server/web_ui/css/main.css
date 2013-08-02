@@ -1,0 +1,231 @@
+body {
+	margin:10px;
+	font-size:14px;
+}
+
+.ui-daterangepickercontain .ui-widget-content {
+	font-size:11px;
+	background:#222;
+	opacity:1;
+	filter:alpha(opacity=100);
+}
+
+ul.menu li.right {
+	float:right;
+}
+.menu-wrapper {
+	margin-bottom:10px;
+}
+
+.select-div {
+	color:#777;
+	border:1px solid #777;
+	padding:2px 4px;
+	margin:0 4px;
+	cursor:pointer;
+}
+.transparent {
+	opacity:0.8;
+	filter:alpha(opacity=80);
+}
+
+.ui-dialog-black,
+.ui-dialog-black .ui-dialog-titlebar {
+	font-size:12px;
+	color:#FFF;
+	background:#000;
+	opacity:0.8;
+	filter:alpha(opacity=80);
+	padding:10px 15px;
+	border:0;
+}
+.ui-dialog-black .ui-dialog-titlebar {
+	padding:0;
+}
+.ui-dialog-black .ui-dialog-titlebar span {
+	font-size:16px;
+	font-weight:bold;
+}
+.ui-dialog-black .ui-dialog-content {
+	color:#FFF;
+	padding:0;
+}
+.ui-dialog-black .ui-dialog-content a {
+	font-size:14px;
+}
+.ui-dialog-black .ui-dialog-content a:hover {
+	font-color:#09c;
+	background:#000;
+	text-decoration:underline;
+}
+.ui-dialog-black .ui-dialog-titlebar-close .ui-icon, 
+.ui-dialog-black .ui-dialog-titlebar-close .ui-icon,
+.ui-dialog-black .ui-state-hover {
+	background:url('images/close_icon.png');
+}
+.ui-dialog-black ul {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+.left-column {
+	width:16%;
+	min-width:200px;
+	float:left;
+}
+.right-column {
+	width:84%;
+	float:left;
+}
+.left-column .title {
+	text-decoration:underline;
+}
+.left-column .list {
+	font-size:12px;
+}
+.left-column button {
+	margin-top: 20px;
+	cursor:pointer;
+}
+.menu-item-wrapper {
+	margin-bottom:10px;
+}
+.menu-item {
+	background:#000;
+	color:#FFF;
+	padding:2px 4px;
+	cursor:pointer;
+}
+
+.chart-wrapper {
+	width:88%;
+}
+.chart-title {
+	font-size:16px;
+	margin-bottom:6px;
+	font-style:italic;
+}
+.chart-block {
+	border:0px solid #000;
+	margin-bottom:20px;
+}
+
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+.clear {
+	clear:both;
+}
+.hide {
+	display:none;
+}
+
+
+/* Menu styles */
+ul.menu
+{
+	margin:0;
+	padding:0;
+	list-style-type:none;
+	width:auto;
+	position:relative;
+	display:block;
+	height:30px;
+	font-size:12px;
+	font-weight:bold;
+	background:transparent url(images/nav_bg.png) repeat-x top left;
+	font-family:Arial, Helvetica, sans-serif;
+	border-bottom:1px solid #000000;
+	border-top:1px solid #000000;
+}
+ul.menu li
+{
+	display:block;
+	float:left;
+	margin:0;
+	padding:0;
+}
+ul.menu li a
+{
+	display:block;
+	float:left;
+	color:#999999;
+	text-decoration:none;
+	font-weight:bold;
+	padding:8px 20px 0 20px;
+}
+ul.menu li a:hover
+{
+	color:#FFFFFF;
+	height:22px;
+	background:transparent url(images/nav_bg.png) 0px -30px no-repeat;
+}
+ul.menu li a.current
+{
+	display:inline;
+	height:22px;
+	background:transparent url(images/nav_bg.png) 0px -30px no-repeat;
+	float:left;
+	margin:0;
+}
+
+/* Tag List styles */
+.tags-wrapper {
+	width:10%;
+	margin-left:2%;
+}
+.tags-wrapper .title {
+	font-weight:bold;
+	text-decoration:underline;
+	margin-bottom:8px;
+}
+.tags-list {
+	overflow-y:auto;
+}
+.tags-list a {
+	font-weight:100;
+	display:block;
+	color:#000;
+}
+.tags-list a:hover div {
+	background:#000;
+	color:#FFF;
+}
+
+.tags-list .label {
+	width:16px;
+	font-size:20px;
+	margin-right:6px;
+}
+
+/* Datatable styles */
+.ui-dialog-black .yui-skin-sam table {
+	font-size:13px;
+	border-spacing:0 1px;
+	margin:0 auto;
+}
+.ui-dialog-black .yui-skin-sam table td {
+	text-align:right;
+}
+.ui-dialog-black .yui-skin-sam table td.yui-dt-col-timestamp .yui-dt-liner {
+    width:140px;
+    text-align:left;
+}
+.ui-dialog-black .yui-skin-sam .yui-dt-liner {
+	padding:4px 6px;
+}
+.ui-dialog-black .yui-skin-sam th {
+	background: url(http://yui.yahooapis.com/2.9.0/build/assets/skins/sam/sprite.png) repeat-x 0 -100px;
+}
+.ui-dialog-black .yui-skin-sam th a {
+	color:#000;
+}
+.ui-dialog-black .yui-skin-sam th a:hover {
+	color:#000;
+	text-decoration:underline;
+	background:none;
+}

@@ -1,0 +1,3 @@
+Collection of ETL and processing scripts to manipulate various data
+streams send to zPerfmon server. It also delivers the web UI to view
+the data in a timestamp keyed manner.

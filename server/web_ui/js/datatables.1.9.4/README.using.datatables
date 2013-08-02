@@ -1,0 +1,12 @@
+Download the 1.9.4 version of datatables. This is the version we
+tested and have used. Later or earlier version may work as well.
+
+From datatables package directory, copy or symlink the following
+directories to <httpd root>/zperfmon/js/datatables.1.9.4/
+
+DataTables-1.9.4/media/images
+DataTables-1.9.4/media/css
+DataTables-1.9.4/media/js
+
+
+You can also run the link_datatable script provided here.

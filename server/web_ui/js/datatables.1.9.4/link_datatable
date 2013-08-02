@@ -1,0 +1,14 @@
+#!/bin/bash
+
+HTTPD_ROOT="/var/www/html/zperfmon"
+DATA_TABLE_DIR=$1
+
+if [[ "${DATA_TABLE_DIR}__" != "__" && -f ${DATA_TABLE_DIR} ]]
+then
+	ln -s "${DATA_TABLE_DIR}/media/css" ${HTTPD_ROOT}/zperfmon/js/datatables.1.9.4/css
+	ln -s "${DATA_TABLE_DIR}/media/images" ${HTTPD_ROOT}/zperfmon/js/datatables.1.9.4/images
+	ln -s "${DATA_TABLE_DIR}/media/js" ${HTTPD_ROOT}/zperfmon/js/datatables.1.9.4/js
+	echo "Links created from ${DATA_TABLE_DIR} to ${HTTPD_ROOT}/zperfmon"
+else
+	echo "Please give me as argument directory where datatables was extracted."
+fi

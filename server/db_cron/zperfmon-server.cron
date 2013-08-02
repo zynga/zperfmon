@@ -1,0 +1,11 @@
+29,59 * * * * root /bin/nice -n 10 /usr/local/zperfmon/bin/get_game_metrics.sh > /dev/null 2>&1
+*/5 * * * * root /bin/nice -n 10 /usr/local/zperfmon/bin/process_uploads.sh > /dev/null 2>&1
+# 25,55 * * * * root /bin/nice -n 10 /usr/local/zperfmon/bin/get_rightscale_data.sh > /dev/null 2>&1
+*/5 * * * * root /bin/nice -n 10 /usr/local/zperfmon/bin/get_splunk_metrics.php > /dev/null 2>&1
+10 6 * * *  root /usr/local/zperfmon/bin/daily_job.sh > /dev/null 2>&1
+25,55 * * * * root /usr/local/zperfmon/bin/fetch_rs.py -y instance > /dev/null 2>&1
+0 */12 * * * root /usr/local/zperfmon/bin/fetch_rs.py -y deployment > /dev/null 2>&1
+0  1 * * * root /usr/local/zperfmon/bin/fetch_rs.py -y template > /dev/null 2>&1
+1 0 */3 * * root /usr/local/zperfmon/bin/xhprof_update.sh > /dev/null 2>&1
+0 23 1 * * root /bin/nice php /usr/local/zperfmon/bin/zperfmon_partition_dynamics.php > /dev/null 2>&1
+0 3 * * * root /bin/nice php  /usr/local/zperfmon/bin/zperfmon-report-games-test.php >/dev/null 2>&1

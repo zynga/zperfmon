@@ -1,0 +1,459 @@
+body {
+    padding:0 10px 10px;
+    font-family:'Ubuntu',arial,serif;
+	width:1875px;
+	background:#EEE;
+}
+div {
+	display:block;
+}
+.hd .title {
+    font-size:40px;
+    font-family: 'Michroma', arial, serif;
+    font-weight:bold;
+    color:#999;
+	line-height:80px;
+}
+.hd {
+    margin-bottom:10px;
+}
+.bd {
+    margin:0 10px;
+}
+.clear {
+    clear:both;
+}
+.left {
+    float:left;
+}
+.right {
+    float:right;
+}
+.hide {
+	display:none;
+}
+.row {
+    margin-bottom:20px;
+}
+.gauges {
+    float:left;
+    margin-left:40px;
+}
+.gauge-wrapper {
+	margin-left:30px;
+}
+.gHolder .gFill {
+	width:126px;
+	margin-left:14px;
+	border-left:1px solid #5B5B5B;
+}
+.gHolder .g_max {
+    width:12px;
+	margin-left:2px;
+	border:none;
+    border-top:1px solid #2B2B2B;
+	border-right:1px solid #2B2B2B;
+	background:#8DEECC;
+    opacity:0.5;
+}
+#gauge-legend {
+    padding-left:20px;
+    text-align:center;
+}
+#gauge-legend .highmark-color {
+    width:14px;
+    height:14px;
+    border:1px solid #2B2B2B;
+    opacity:0.5;
+    background:#8DEECC;
+    margin:0 auto;
+    margin-right:4px;
+    display:inline-block;
+}
+
+.info-block {
+    float:left;
+    font-size:40px;
+    font-family:arial, verdana
+}
+.info-block .key {
+    margin-left:8px;
+}
+.info-block .key .superscript {
+    font-size:16px;
+    vertical-align:top;
+}
+.info-block .val {
+    display:block;
+    font-size:110px;
+}
+.block {
+    width:590px;
+    border:0 solid #CCC;
+    float:left;
+}
+.block-header {
+    background-color:#666;
+    color:#FFF;
+    padding:5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.page-times-chart-wrapper {
+	width:600px;
+}
+#page-times-pager {
+    padding:10px;
+}
+#page-times-pager ul {
+    list-style-type:none;
+}
+#page-times-pager li a {
+    cursor:pointer;
+}
+#pie-charts-pager {
+    margin-left:300px;
+}
+#pie-charts-pager a {
+    cursor:pointer;
+}
+.bar-legend {
+	margin:80px 40px 0 0;
+}
+.bar-legend .color {
+	width:14px;
+	height:14px;
+	border:1px solid #FFF;
+	display:inline-block;
+	margin:1px 4px 0 0;
+	float:left;
+}
+.bar-legend .yesterday {
+	margin-bottom:4px;
+}
+.bar-legend .yesterday .color {
+	background:#4572A7;
+}
+.bar-legend .today .worse {
+	background:#AA4643;
+}
+.bar-legend .today .better {
+	background:#89A54E;
+}
+.box .title {
+	border:1px solid #555;
+	-moz-border-radius: 5px 5px 5px 0;
+	border-radius: 5px 5px 5px 0;
+	padding:4px;
+	color:#FFF;
+	background:#555;
+}
+.bar-chart {
+	width:150px;
+	height:180px;
+}
+#splunk-charts, #instances-charts {
+	border: 1px solid #999999;
+	-moz-border-radius: 5px;
+    border-radius: 5px;
+	padding-top: 10px;
+}
+#splunk-charts {
+	width:450px;
+}
+#instances-charts {
+    width: 600px;
+	margin-bottom:20px;
+}
+.hr {
+    width:100%;
+    border-top:1px solid #999;
+    margin:10px 0 20px;
+}
+.vr {
+    float:left;
+    height:100%;
+    border-left:1px solid #999;
+    margin:0 10px;
+}
+.arrow-wrapper {
+	text-align:center;
+}
+.arrow-wrapper .arrow {
+    display:inline;
+    font-size:140px;
+	line-height:88px;
+}
+.arrow-wrapper .diff {
+	line-height:88px;
+}
+.darkred {
+	color:#CD0000;
+}
+.red {
+    color:#EE2C2C;
+}
+.orange {
+	color:#FF7F24;
+}
+.green {
+    color:#458B00;
+}
+.diff {
+    text-align:center;
+    font-size:24px;
+}
+select {
+    padding:2px;
+}
+#select-game-div {
+	font-family:'Ubuntu';
+    font-size:16px;
+	margin-right:10px;
+}
+#game-info {
+    font-family:'Michroma';
+    font-size:20px;
+	line-height:30px;
+	margin-top:10px;
+}
+#game-info #game-name {
+    font-size:48px;
+}
+#game-info #game-version {
+	margin-left:4px;
+}
+#game-info #game-age {
+	margin-left:20px;
+}
+#game-info .game-release {
+	font-family:'Ubuntu';
+}
+#game-info .game-release .val {
+	font-style:italic;
+	text-decoration:underline;
+}
+
+#instances-data {
+    margin:20px 0;
+}
+#instances-data .note {
+	margin-top:6px;
+}
+#instances-data .note span {
+	font-size:13px;
+	font-color:#777;
+	font-style:italic;
+}
+.table1 thead th.title {
+	font-family:'Michroma';
+	font-size:20px;
+	color:#93CE37;
+	background:#FFF;
+	border-width:2px 2px 3px;
+	text-shadow:0;
+	-webkit-border-bottom-left-radius:5px;
+    -moz-border-radius:5px 5px 0px 5px;
+    border-bottom-left-radius:5px;
+}
+
+/* Styles for meter bars */
+.meters {
+    color:#FFF;
+    font-weight:bold;
+    text-shadow:1px #FFF;
+    background-color: #333;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    padding:10px;
+	float:right;
+}
+.meter-wrapper {
+    height:40px;
+    margin:10px 2px;
+}
+.meter {
+	margin-right:40px;
+}
+.meter-wrapper .label {
+    margin-right:10px;
+    float:left;
+    line-height:40px;
+}
+.meter-wrapper .bar {
+    width:500px;
+    float:right;
+}
+.meter-wrapper .meter span {
+	color:#000;
+	line-height:22px;
+	text-align:right;
+}
+.meter-wrapper .value {
+	float:right;
+	margin-top:-28px;
+}
+
+.good {
+    color: green;
+}
+.bad {
+    color: orange;
+}
+.ugly {
+    color: red;
+}
+.okay {
+    color: black;
+}
+#nagios {
+    font-size:30px;
+    padding:30px 10px 0 0;
+}
+
+#nagios .label {
+	line-height:30px;
+	margin-top:48px;
+}
+#nagios .val {
+	line-height:120px;
+	margin-left:4px;
+}
+
+/* Table 1 Style */
+table.table1{
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 16px;
+    font-style: normal;
+    border-collapse:separate;
+}
+.table1 thead th{
+    padding:4px;
+    color:#fff;
+    text-shadow:1px 1px 1px #568F23;
+    border:1px solid #93CE37;
+    border-bottom:3px solid #9ED929;
+    background-color:#9DD929;
+    background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.02, rgb(123,192,67)),
+        color-stop(0.51, rgb(139,198,66)),
+        color-stop(0.87, rgb(158,217,41))
+        );
+    background: -moz-linear-gradient(
+        center bottom,
+        rgb(123,192,67) 2%,
+        rgb(139,198,66) 51%,
+        rgb(158,217,41) 87%
+        );
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-radius:5px 5px 0px 0px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+.table1 thead th:empty{
+    background:transparent;
+    border:none;
+}
+.table1 tbody th{
+    color:#fff;
+    text-shadow:1px 1px 1px #568F23;
+    background-color:#9DD929;
+    border:1px solid #93CE37;
+    border-right:3px solid #9ED929;
+    padding:0px 5px;
+    background:-webkit-gradient(
+        linear,
+        left bottom,
+        right top,
+        color-stop(0.02, rgb(158,217,41)),
+        color-stop(0.51, rgb(139,198,66)),
+        color-stop(0.87, rgb(123,192,67))
+        );
+    background: -moz-linear-gradient(
+        left bottom,
+        rgb(158,217,41) 2%,
+        rgb(139,198,66) 51%,
+        rgb(123,192,67) 87%
+        );
+    -moz-border-radius:5px 0px 0px 5px;
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-bottom-left-radius:5px;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+}
+.table1 tfoot td{
+    color: #9CD009;
+    font-size:32px;
+    text-align:center;
+    padding:10px 0px;
+    text-shadow:1px 1px 1px #444;
+}
+.table1 tfoot th{
+    color:#666;
+}
+.table1 tbody td{
+    padding:4px 8px;
+    text-align:center;
+    background-color:#DEF3CA;
+    border: 2px solid #E7EFE0;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+    color:#666;
+    text-shadow:1px 1px 1px #fff;
+}
+.table1 tbody span.check::before{
+    content : url(../images/check0.png)
+}
+.table1 .arrow2 {
+    font-size:32px;
+}
+
+/* Warning/Alert message box */
+.warn-msg {
+	border:solid 1px; 
+	background:#FFBABA;
+	color:#D8000C;
+	padding:4px;
+	text-align:center;
+	margin: 0 10px 0 60px;
+}
+
+#alert-msg {
+	font-size:60px;
+	padding-left:20px;
+}
+
+/* YUI carousel for charts */
+.yui-carousel-nav {
+	display:none
+}
+.yui-carousel .yui-carousel-item-selected,
+.yui-skin-sam .yui-carousel,
+.yui-skin-sam .yui-carousel-vertical,
+.yui-carousel-element li { 
+	border: none;
+}
+
+/* Zoom buttons */
+#zoom-control {
+    margin:26px 0 0 30px;
+}
+#zoom-control a {
+    width:32px;
+    height:32px;
+    display:inline-block;
+	cursor:pointer;
+}
+#zoom-control #zoom-in {
+    background:url("images/zoom-in.png");
+}
+#zoom-control #zoom-out {
+    background:url("images/zoom-out.png");
+}

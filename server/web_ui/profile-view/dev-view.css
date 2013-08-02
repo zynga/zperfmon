@@ -1,0 +1,34 @@
+.yui_style tr:nth-child(odd) {
+	background: #EDF5FF
+}
+.yui_style tr:nth-child(even) {
+	background: white
+}
+.ui-datepicker {
+	width: 18em;
+	padding: .2em .2em 0;
+}
+.yui_style td {
+	height:30px;
+}
+#hide_button span{
+	padding: 17px 2px;background-image: url(http://yui.yahooapis.com/2.8.2r1/build/assets/skins/sam/sprite.png);border: 1px solid;border-color: grey;
+}	
+#show_button span{
+	padding: 17px 2px;background-image: url(http://yui.yahooapis.com/2.8.2r1/build/assets/skins/sam/sprite.png);border: 1px solid;border-color: grey;
+}
+#SidePanelOuter{
+	border: 1px solid #AAA;
+	border-radius: 4px;
+	padding: 10px;
+}
+.hide{
+	display:none;
+}
+#SidePane{
+	width:309px;
+}
+#mainpanetable {
+	float:left;
+	margin-top:0px;
+}

@@ -1,0 +1,83 @@
+/* The group cell */
+.yui-skin-sam .yui-dt .group
+{
+    border-top: 1px solid #CBCBCB;
+    border-bottom: 1px solid #7f7f7f;
+    font-weight: bold;
+    background-image: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png);
+    background-position: 0px -1300px;
+    color: black;
+    cursor: pointer;
+}
+
+/* Group inner style */
+.yui-skin-sam .yui-dt .group .liner
+{
+    padding: 4px 10px;
+}
+
+/* Selected group */
+.yui-skin-sam .yui-dt .group-selected
+{
+    background-image: none;
+    background-color: #426FD9;
+    color: White;
+}
+
+/* Disabled group */
+.yui-skin-foodstorm .yui-dt .group-disabled
+{
+    cursor: default;
+}
+
+/* The first group in the data table */
+.yui-skin-sam .yui-dt .group-first
+{
+    border-top: 1px solid #7f7f7f;
+}
+
+/* The first row in the group */
+.yui-skin-sam .yui-dt .group-first-row td
+{
+}
+
+/* The group when collapsed */
+.yui-skin-sam .yui-dt .group-collapsed
+{
+    margin-top: 0px; /* Makes the group cover up the first row in the group. */
+}
+
+/* The first rown in the group when collapsed */
+.yui-skin-sam .yui-dt .group-first-row-collapsed td
+{
+    padding-top: 0px; /* Makes the group cover up the first row in the group. */
+}
+
+/* Base styles for the group icon */
+.yui-skin-sam .yui-dt .group .icon
+{
+    width: 18px;
+    height: 15px;
+    position: absolute;
+    cursor: pointer;
+}
+
+/* The label within the group */
+.yui-skin-sam .yui-dt .group .label
+{
+    margin-left: 25px;
+}
+
+/* The group icon when expanded */
+.yui-skin-sam .yui-dt .group-expanded .icon
+{
+   background-image: url(dt-group-arrow-down.png);
+   background-repeat: no-repeat;
+}
+
+/* The group icon when collapsed */
+.yui-skin-sam .yui-dt .group-collapsed .icon
+{
+   background-image: url(dt-group-arrow-up.png);
+   background-repeat: no-repeat;
+}

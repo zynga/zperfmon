@@ -1,0 +1,25 @@
+Contributors:
+	Binu Jose Philip
+	Debashish Bose
+	Gaurav
+	Gopal Vijayaraghavan
+	Korath Paul
+	Mahesh Gattani
+	Nasrudheen Kakkadavath
+	Nuruddin Alam
+	Rajeev Bakshi
+	Saurabh Odhyan
+	Shankara K Seethappa
+	Ujwalendu Prakash
+
+Additional Contributors:
+	Prakash Ramachandran
+	Prashun Purkayastha
+
+
+PHP profiling is completely based on xhprof extension by Facebook. Thank you
+FB for the wonderfully practical xhprof.
+
+There are a host of other technology pieces which went into the cauldron to
+make this possible. jquery, YUI, google widgets, Datatables, MySQL nd more.
+You could put in highcharts or D3 instead and get a much prettier interface.

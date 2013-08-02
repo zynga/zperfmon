@@ -1,0 +1,44 @@
+body {
+	font-family: 'Ubuntu',arial,serif;
+}
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+.clear {
+	clear:both;
+}
+.hd {
+	margin-bottom:10px;
+	color:#212121;
+}
+.hd .title {
+	font-family:'Michroma';
+	font-size:40px;
+	font-weight:bold;
+	color:#999;
+}
+#game-info {
+	font-family: 'Ubuntu';
+	font-size: 16px;
+}
+#game-info #select-game-div {
+	margin:0 20px 0 10px;
+}
+#game-info #game-name {
+	font-family:'Michroma';
+	font-size:48px;
+	line-height:36px;
+}
+#game-info .label {
+	margin-left:6px;
+}
+#game-info select {
+	font-size:14px;
+	margin-left:4px;
+}
+#game-info #dashboard-view-link {
+	margin:8px 0 0 4px;
+}
