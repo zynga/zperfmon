@@ -20,7 +20,7 @@ Vendor: Zynga Repository, https://svn.zynga.com/svn/zperfmon/trunk/client/
 
 Source: /zperfmon-client.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires: php >= %{php_version}, php < %{php_max_version}
+Requires: php >= %{php_version}
 %if "%{rhel}" == "5"
 Requires: php-zend-abi = %{php_zendabiver}
 %endif

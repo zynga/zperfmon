@@ -84,7 +84,6 @@ $server_cfg = array(
 	"game_deploy_map" => "/etc/zperfmon/game_deploy_map.json",
 
 	"ini_file_path" => "/db/zperfmon/%s/configs/zperfmon.ini",
-	"ram_disk_base_path" => "zperf_stage",	
 
 	# Report and Mail configuration
 	"mail_recipients" => "",

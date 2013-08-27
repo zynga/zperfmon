@@ -2,23 +2,6 @@
 
 <?php
 
-#
-# Copyright 2013 Zynga Inc.
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-#    you may not use this file except in compliance with the License.
-#    You may obtain a copy of the License at
-# 
-#    http://www.apache.org/licenses/LICENSE-2.0
-# 
-#    Unless required by applicable law or agreed to in writing, software
-#      distributed under the License is distributed on an "AS IS" BASIS,
-#      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#    See the License for the specific language governing permissions and
-#    limitations under the License.
-# 
-
-
 //
 // This is the cron job for zperfmon which processes and inserts
 // uploaded data into DB. It can be called with parameters as game name 
@@ -330,7 +313,7 @@ function insert_tbz($server_cfg, $game_cfg, $tbz_file, $current_timestamp, $flag
 	list($mon_p, $hour_p, $min_p, $sec_p) = split("-", date('m-G-i-s',$current_timestamp));
 	$p_tag = $mon_p; 
 	if (!((($hour_p == 0) || ($hour_p == 2) || ($hour_p == 4) || ($hour_p == 6) || ($hour_p == 8) || 
-		($hour_p == 10) || ($hour_p == 12) || ($hour_p == 14) || ($hour_p == 16) || ($hour_p == 18) || ($hour_p == 20) || ($hour_p == 22) ) 
+	    ($hour_p == 10) || ($hour_p == 12) || ($hour_p == 14) || ($hour_p == 16) || ($hour_p == 18) || ($hour_p == 20) || ($hour_p == 22) )
 		&& ($min_p == 0) && ($sec_p == 0))) {
 		$p_tag = 0 - $p_tag;
 	}
@@ -479,133 +462,6 @@ function get_options()
 	return $options;
 }
 
-function create_directory($dir_name,$current_time_slot,$server_cfg,$game_cfg)
-{
-        if (!$current_time_slot) {
-                return null;
-        }
-
-        //
-        // Make sure any minute inside given half hour slot goes into that
-        // timeslot. If we round(), till 15th minute will go into the previous
-        // timeslot and 15-30 will go into the next timeslot. To avoid that,
-        // we cast to int and get the mantissa.
-        //
-        $time_slot_1 = (int)$current_time_slot + 1;
-	$time_slot_2 = $time_slot_1 + 1;
-        $dir_name_1 = sprintf($dir_name, (string)$time_slot_1);
-	$dir_name_2 = sprintf($dir_name, (string)$time_slot_2);
-        $oldmask = umask(0); // to set the chmod of directory as 777
-
-	$user = "apache";	
-
-	if (!is_dir($dir_name_1)  && !mkdir($dir_name_1, 0777, true)){
-                return null;
-        }
-
-	if (!is_dir($dir_name_2)  && !mkdir($dir_name_2, 0777, true)){
-                return null;
-        }
-
-	$base = "/".$server_cfg['ram_disk_base_path']."/";
-        $check_ram_disk = shell_exec("df -h");
-
-        if(preg_match("/".$server_cfg['ram_disk_base_path']."/",$check_ram_disk)){
-                $dir_name_ram_1 = $base.$dir_name_1;
-		$dir_name_ram_2 = $base.$dir_name_2;
-                if (!is_dir($dir_name_ram_1)  && !mkdir($dir_name_ram_1, 0777, true)){
-                          return null;
-                 }
-		if (!is_dir($dir_name_ram_2)  && !mkdir($dir_name_ram_2, 0777, true)){
-                          return null;
-                }
-                shell_exec("mount --bind $dir_name_ram_1 $dir_name_1");
-		$a = shell_exec("echo $?");
-		if($a != 0){
-			error_log("Mount Error no : $a", 3, sprintf($server_cfg['log_file'],$game_cfg['name']));
-		}
-		shell_exec("mount --bind $dir_name_ram_2 $dir_name_2");
-		$b = shell_exec("echo $?");
-		if($b != 0){
-			error_log("Mount Error no : $b", 3, sprintf($server_cfg['log_file'],$game_cfg['name'])); 		
-		}
-        }
-	else{
-		error_log("NO Ramdisk present at $base", 3, sprintf($server_cfg['log_file'],$game_cfg['name']));
-		return 0;
-	}	
-	chown($dir_name_1,$user);
-	chown($dir_name_2,$user);
-	chown($dir_name_ram_1,$user);
-	chown($dir_name_ram_2,$user);	
-
-	chgrp($dir_name_1,$user);	
-	chgrp($dir_name_2,$user);	
-	chgrp($dir_name_ram_1,$user);	
-	chgrp($dir_name_ram_2,$user);	
-        umask($oldmask);
-	$dir_name_array = array();
-	$dir_name_array[] = $dir_name_1;
-	$dir_name_array[] = $dir_name_2;
-        return $dir_name_array;
-
-}
-
-function delete_ramdisk_data($game_name,$time_slots,$timestamp,$server_cfg,$game_cfg){
-	if (empty($time_slots) ) {
-                        $slot = (int)($timestamp/1800);
-                        $time_slots_array[] = $slot;
-                        $time_slots_array[] = $slot - 1;
-                }
-                else{
-                        $search = array("{","}");
-                        $time_slots = str_replace($search,'',$time_slots);
-                        $time_slots_array[] = $time_slots;
-                }
-
-                $base = "/".$server_cfg['ram_disk_base_path']."/";
-                $game_cfg = load_game_config($game_name);
-                $root_upload_directory = sprintf($server_cfg["root_upload_directory"],
-                                          $game_cfg["name"]);
-                foreach($time_slots_array as $timeslot_val){
-                        $path_timeslot = $root_upload_directory.$timeslot_val."/".$server_cfg["profile_upload_directory"]."/";
-                        $check_mount_point = trim(shell_exec("mountpoint ".$path_timeslot));
-                        $a = 0;
-                        while($check_mount_point == "$path_timeslot is a mountpoint"){
-
-                                shell_exec("umount -l $path_timeslot");
-                                $a = shell_exec("echo $?");
-                                if($a != 0){
-                                        error_log("Umount Error No : $a", 3, sprintf($server_cfg['log_file'],$game_cfg['name']));
-                                        break;
-                                }
-
-                                $check_mount_point = trim(shell_exec("mountpoint ".$path_timeslot));
-                        }
-                        if($a ==0){
-                                $user = "apache";
-                                $oldmask = umask(0); // to set the chmod of directory as 777
-                                shell_exec("cp -r ".$base.$path_timeslot." ".$root_upload_directory.$timeslot_val."/");
-                                chown($path_timeslot,$user);
-                                chown($path_timeslot.".profiles",$user);
-                                chown($path_timeslot.".slowpages",$user);
-                                chown($path_timeslot.".apache_stats",$user);
-
-                                chgrp($path_timeslot,$user);
-                                chgrp($path_timeslot.".profiles",$user);
-                                chgrp($path_timeslot.".slowpages",$user);
-                                chgrp($path_timeslot.".apache_stats",$user);
-
-                                umask($oldmask);
-
-                                shell_exec("rm -rf ".$base.$root_upload_directory.$timeslot_val."/");
-                        }
-                        else{
-                                error_log("[FATAL ERROR]Skipping unmount and copying data from ramdisk!!", 3, sprintf($server_cfg['log_file'],$game_cfg['name']));
-                        }
-                }
-}
-
 //
 // Main processing loop: scan upload directories for each configured
 // game and do post-processing.
@@ -622,35 +478,23 @@ function main($server_cfg)
 	if (!empty($options['t'])) {
 		$time_slots = $options['t'];
 	}
-	$timestamp = $_SERVER['REQUEST_TIME'];
-	$current_time_slot = (int)($timestamp / (30 * 60));
-	foreach ($game_names as $game_name) {
-		zpm_preamble($game_name);
-		
-		// MODIFIED!!!! Create and mount next two timeslots !!!
-		$game_cfg = load_game_config($game_name);
-		if(!$game_cfg){
-                       error_log("configuration for ".$game_name." is not loaded\n", 3, sprintf($server_cfg['log_file'],$game_cfg['name']));
-                       continue;
-                }
 
-		$target_dir = sprintf($server_cfg['root_upload_directory'],$game_cfg["name"]);
-		$target_dir = $target_dir."/%s/".$server_cfg["profile_upload_directory"];
-		$dir_name_array = create_directory($target_dir,$current_time_slot,$server_cfg,$game_cfg);
-		if($dir_name_array === null){
-		       error_log("Directory creation failed for the game ".$game_cfg['name'], 3, sprintf($server_cfg['log_file'],$game_cfg['name']));
-                       continue;
-		}	
-		if($dir_name_array === 0){
-                       error_log("No Ram disk Exist!!!".$game_cfg['name'], 3, sprintf($server_cfg['log_file'],$game_cfg['name']));
-                }
-	
+	foreach ($game_names as $game_name) {
+		
+		zpm_preamble($game_name);
+
 		//creating new games and getting the list of web arrays to process data for
 	        $rs = new RightScale($server_cfg, load_game_config($game_name));
 
         	$rs->make_array_games();
 
 		$array_ids = $rs->get_arrays_to_serve();
+
+                $game_cfg = load_game_config($game_name);
+                if(!$game_cfg){
+                       error_log("configuration for ".$game_name." is not loaded\n", 3, sprintf($server_cfg['log_file'],$game_cfg['name']));
+                       continue;
+                }
 
                 //
                 // Wrap processing for each game inside a file lock
@@ -661,7 +505,6 @@ function main($server_cfg)
                 $game_lock_handle = grab_lock($game_lock_file, $server_cfg, $game_cfg);
                 if (!$game_lock_handle) {
                        error_log("Could not get exclusive lock for \"$game_name\"\n", 3, sprintf($server_cfg['log_file'],$game_cfg['name']));
-		       delete_ramdisk_data($game_name,$time_slots,$timestamp,$server_cfg,$game_cfg);
                        continue;
                 }
 
@@ -711,16 +554,9 @@ function main($server_cfg)
 		drop_lock($game_lock_handle, $game_lock_file);
 
 		zpm_postamble($game_name);
-
-		//MODIFIED!!!!
-		if($dir_name_array != 0){
-			delete_ramdisk_data($game_name,$time_slots,$timestamp,$server_cfg,$game_cfg);
-		}		
 	}
 }
 
 main($server_cfg);
-
-
 
 ?>
