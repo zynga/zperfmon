@@ -1,0 +1,65 @@
+TARGET=
+ROOT_DIR=$(php -r "include_once 'server.cfg'; echo \$server_cfg['root_upload_directory'];"  | sed 's/\(.zperfmon\/\)\(.*\)/\1/')
+function process_options ()
+{
+    until [ -z "$1" ]
+    do
+      case $1 in
+		  --game|-g)
+		  GAME=$2
+		  shift 2
+		  ;;
+
+		 *)
+		  echo "Usage: $0 [--game|-g <game>]"
+		  exit 1
+		  ;;
+      esac
+    done
+}
+
+process_options $*
+array_ids=$(php /usr/local/zperfmon/bin/get_array_ids.php -g $GAME)
+if [[ ! ${GAME} =~ "^[a-zA-Z]+[a-zA-Z_0-9]*$" ]]
+then
+	echo "Given game name is not valid!!!"
+	echo "exiting..."
+	exit
+fi
+
+sed -i "s/[']$GAME['][ ]*[,]*//"  ${TARGET}/etc/zperfmon/server.cfg
+sed -i 's/["]'$GAME'["][ ]*[,]*//'  ${TARGET}/etc/zperfmon/server.cfg
+
+user=$(php /usr/local/zperfmon/bin/get_db_details.php $GAME db_user)
+pass=$(php /usr/local/zperfmon/bin/get_db_details.php $GAME db_pass)
+host=$(php /usr/local/zperfmon/bin/get_db_details.php $GAME db_host)
+game_database="zprf_"$GAME
+
+rm -rf "/etc/zperfmon/conf.d/"$GAME".cfg"
+#mysqladmin -f -u $user -p$pass -h $host drop $game_database
+#rm -rf ${TARGET}/${ROOT_DIR}/$GAME
+#rm -rf /var/www/html/zperfmon/blobs/$GAME
+for array_id in $array_ids
+do
+   if [ "$array_id" != '0' ]
+   then
+		game_database="zprf_"$GAME"_"$array_id
+		GAME_ID=$GAME"_"$array_id
+   fi
+
+   #mysqladmin -f -u $user -p$pass -h $host drop $game_database
+   #rm -rf ${TARGET}/${ROOT_DIR}/$GAME_ID
+   #rm -rf ${TARGET}/var/www/html/zperfmon/blobs/$GAME_ID
+done
+
+GAME_CFG=`[ -f "/etc/zperfmon/conf.d/"$GAME".cfg" ] && echo "0" || echo "1"`
+ROOT_DIR=$(php -r "include_once 'server.cfg';\$test = array_search('$GAME',  \$server_cfg['game_list']);if(\$test)echo '0';else echo '1';")
+
+if [ $GAME_CFG -eq 0 ]; then
+        echo "${GAME} deletion failed, game_cfg not deleted"
+elif [ $ROOT_DIR -eq 0 ]; then
+        echo "${GAME} deletion failed, cannot edit files"
+else
+        echo "${GAME} successfully deleted"
+fi
+

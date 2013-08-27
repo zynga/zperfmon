@@ -1,0 +1,150 @@
+#!/bin/bash
+
+BINPATH="`dirname $0`"
+
+ARRAY=true
+TARGET=
+CMDS_TO_RUN=`mktemp /tmp/cmds_to_run.XXXXXX`
+DEFAULT_DAU=-1
+DEFAULT_TAG='\"\"'
+DEFAULT_RELEASE='\"\"'
+
+function process_options ()
+{
+    until [ -z "$1" ]
+    do
+      case $1 in
+          --game|-g)
+              GAME=$2
+	      _GAME=$2
+              shift 2
+              ;;
+          --deployment_id|-did)
+              DEPLOY_ID=$2
+              shift 2
+              ;;
+          --environment|-env)
+              ENV=$2
+              shift 2
+              ;;
+          --zrt_game_name|-zrt)
+              zrt=$2
+              shift 2
+              ;;
+          --game_id|-gid)
+              GAME_ID=$2
+              shift 2
+              ;;
+          --cloud_name|-c)
+              CLOUD_NAME=$2
+              shift 2
+              ;;
+	  --auto_ini|-ini)
+             AUTO_INI=$2
+             shift 2
+             ;;
+         *)
+              echo "Usage: $0 [--game|-g <game>] [--deployment_id|-did <dep_id>] [ --game_id|-gid <game_id>] [--cloud_name|-c <cloud_id>] [--environment|-env <env>] [--zrt_game_name|-zrt <zrt_game_name>] [--auto_ini|-ini <auto_ini_required_or_not>]"
+              exit 1
+              ;;
+      esac
+    done
+}
+
+
+ARRAY="false"
+
+process_options $*
+# Check game name validity (BUG number SEG1898)
+if [[ ! ${GAME} =~ "^[a-zA-Z]+[a-zA-Z_0-9]*$" ]]
+then
+        echo "Given game name is not valid!!!"
+else
+
+ROOT_DIR=$(php -r "include_once 'server.cfg'; echo \$server_cfg['root_upload_directory'];"  | sed 's/\(.zperfmon\/\)\(.*\)/\1/')
+
+if [ $ARRAY = false ]; then
+
+cat > ${CMDS_TO_RUN} <<EOF
+
+mkdir -p  ${TARGET}/${ROOT_DIR}/${GAME};
+mkdir -p  ${TARGET}/${ROOT_DIR}/${GAME}/xhprof.slow;
+mkdir -p  ${TARGET}/${ROOT_DIR}/${GAME}/timeslots;
+mkdir -p  ${TARGET}/${ROOT_DIR}/${GAME}/events;
+mkdir -p  ${TARGET}/${ROOT_DIR}/${GAME}/configs;
+mkdir -p  ${TARGET}/${ROOT_DIR}/${GAME}/reports/daily;
+mkdir -p  ${TARGET}/${ROOT_DIR}/${GAME}/reports/weekly;
+
+chmod -R a+w ${TARGET}/${ROOT_DIR}/${GAME}/;
+
+mkdir -p   ${TARGET}/var/www/html/zperfmon/blobs/${GAME};
+chmod a+w  ${TARGET}/var/www/html/zperfmon/blobs/${GAME};
+
+
+
+ln -s /usr/local/zperfmon/etc/configs/plugin_names.xml  ${TARGET}/${ROOT_DIR}/${GAME}/configs/;
+sed -i 's/"game_list" => array(/"game_list" => array("${GAME}",/' ${TARGET}/etc/zperfmon/server.cfg;
+sed -i 's/"zrt_game_list" => array(/"zrt_game_list" => array("${GAME}",/' ${TARGET}/etc/zperfmon/server.cfg;
+
+if [[ ${ENV:-default} != "default" ]]; then
+	sed -i 's/"auto_updated_game" => array(/"auto_updated_game" => array("${GAME}",/' ${TARGET}/etc/zperfmon/server.cfg;
+fi
+
+if [[ ${AUTO_INI} -eq 1 ]]; then
+        sed -i 's/"auto_ini_games" => array(/"auto_ini_games" => array("${GAME}",/' ${TARGET}/etc/zperfmon/server.cfg;
+fi
+
+sed -e '
+s/__game_name__/${GAME}/
+s/__id_of_game__/${GAME_ID}/
+s/__zrt_env__/${ENV}/
+s/__zrt_game_name__/${zrt}/
+s/ec2_or_zc/${CLOUD_NAME}/
+s/__name_of_game_in_social_network__/${GAME}/
+s/"__ec2_deployement_id__"/${DEPLOY_ID}/
+s/__db_name_for_game__/zprf_${GAME}/' ${TARGET}/etc/zperfmon/conf.d/game.cfg >  ${TARGET}/etc/zperfmon/conf.d/${GAME}.cfg;
+
+
+
+chmod a+w ${TARGET}/etc/zperfmon/conf.d/${GAME}.cfg;
+EOF
+
+fi
+
+
+/bin/bash ${CMDS_TO_RUN};
+rm ${CMDS_TO_RUN}
+
+
+$BINPATH/zperfmon-create-gamedb ${_GAME} ${ARRAYID} >> null
+
+php /usr/local/zperfmon/bin/create_hostgroupsyml.php -g $GAME
+php /usr/local/zperfmon/bin/vertica_table_add_column.php -g $GAME
+php /usr/local/zperfmon/bin/setup_zperf_zrt_keys.php -g $GAME
+php /usr/local/zperfmon/bin/xhprof_update.php -g $GAME
+
+
+if test -z "$ARRAYID"; then
+    php -r "include_once 'create_array_games.php'; include_once 'server.cfg'; \$cag = new CreateArrrayGames(\$server_cfg);\$cag->make_array_games('$GAME','$DEPLOY_ID');"
+fi
+
+
+fi
+
+user=$(php /usr/local/zperfmon/bin/get_db_details.php $GAME db_user)
+pass=$(php /usr/local/zperfmon/bin/get_db_details.php $GAME db_pass)
+host=$(php /usr/local/zperfmon/bin/get_db_details.php $GAME db_host)
+
+FOLDER_CHECK_DB=`[ -d ${TARGET}/${ROOT_DIR}/${GAME} ] && echo "1" || echo "0"`
+FOLDER_CHECK_BLOB=`[ -d ${TARGET}/var/www/html/zperfmon/blobs/$GAME ] && echo "1" || echo "0"`
+DB_CHECK=`echo " SELECT count(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'zprf_${GAME}';  " | mysql -u $user -p$pass -h $host | sed -n 2p`
+ZRUNTIME_CHECK=$(php /usr/local/zperfmon/bin/check_zrt.php -g $GAME)
+if [ $FOLDER_CHECK_DB -eq 0 ] && [ $FOLDER_CHECK_BLOB -eq 0 ] ; then
+	echo "${GAME} addition failed, folder not created"
+elif [ $DB_CHECK -eq 0 ]; then
+	echo "${GAME} addition failed, db craetion failed"
+elif [ $ZRUNTIME_CHECK == 'failed' ]; then
+	echo "${GAME} addition failed, zRuntime updation failed"
+else
+	echo "${GAME} successfully added"
+fi

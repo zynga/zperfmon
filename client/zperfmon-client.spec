@@ -34,7 +34,7 @@ ZPERFMON client is combination of xhprof for profiling php as well as cron jobs 
 %prep
 %setup -q -c -n zperfmon-client
 # Docs are +x (as of 2.0.0), so fix here
-%{__chmod} -x CREDITS README
+%{__chmod} -x README
 
 
 %build
@@ -57,7 +57,7 @@ ${MINUTE} 2 * * * root /usr/local/zperfmon/bin/pullconfig.py &> /dev/null
 HERE
 chown root /etc/cron.d/zperfmon-client
 chmod 0644 /etc/cron.d/zperfmon-client
-/usr/share/php/create_conf.php
+#/usr/share/php/create_conf.php
 if test $? != 0; then echo "zperfmon.ini file is not created"; fi
 pkill -9 count_page_load; true;
 rm /var/run/apache_mon_pid; true;
@@ -88,7 +88,7 @@ rm /var/run/apache_mon_pid; true;
 /usr/local/zperfmon/bin/
 /usr/local/zperfmon/etc/zperfmon.htpasswd
 /usr/share/php/zperfmon.inc.php
-/usr/share/php/create_conf.php
+#/usr/share/php/create_conf.php
 /etc/httpd/conf.d/zperfmon-client.conf
 /etc/zperfmon/zperfmon.ini.sample
 

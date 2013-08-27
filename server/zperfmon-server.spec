@@ -18,7 +18,7 @@ Vendor: Zynga Repository, https://svn.zynga.com/svn/zperfmon/trunk/server/
 
 Source: /zperfmon-server.tgz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires: php >= %{php_version}, graphviz, gearmand, php-splunk-api
+Requires: php >= %{php_version}, graphviz, gearmand
 
 %description
 ZPERFMON server is a server-side components which periodically harvest and aggregate the collected by ZPERFMON client machine data and insert/update the analytics into a managed MySQL db
@@ -26,7 +26,7 @@ ZPERFMON server is a server-side components which periodically harvest and aggre
 %prep
 %setup -q -c -n zperfmon-server
 # Docs are +x (as of 2.0.0), so fix here
-%{__chmod} -x CREDITS README
+%{__chmod} -x README
 
 %clean
 %{__rm} -rf %{buildroot}
