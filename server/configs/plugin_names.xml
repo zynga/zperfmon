@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- 
+-->
+<games>
+  <game>
+    <hostgroup name="web">
+      <vertica_plugin name="cpu-idle">
+        <mysql_column_name>web_cpu_idle</mysql_column_name>
+        <max>100</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="cpu-wait">
+        <mysql_column_name>web_cpu_iowait</mysql_column_name>
+        <max>100</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="cpu-user">
+        <mysql_column_name>web_cpu_user</mysql_column_name>
+        <max>100</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="cpu-system">
+        <mysql_column_name>web_cpu_system</mysql_column_name>
+        <max>100</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="interface_if_packets-eth0">
+        <mysql_column_name>web_nw_@@metric@@_pkts</mysql_column_name>
+        <max>1200000</max>
+        <min>0</min>
+        <metric>rx</metric>
+        <metric>tx</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="interface_if_octets-eth0">
+        <mysql_column_name>web_nw_@@metric@@_bytes</mysql_column_name>
+        <max>30000000</max>
+        <min>0</min>
+        <metric>rx</metric>
+        <metric>tx</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="memory_memory-used">
+        <mysql_column_name>web_mem_used</mysql_column_name>
+        <max>8053063680</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="memory_memory-free">
+        <mysql_column_name>web_mem_free</mysql_column_name>
+        <max>8053063680</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="apache-apache_requests">
+        <mysql_column_name>web_rps</mysql_column_name>
+        <max>100</max>
+        <min>0</min>
+        <metric>count</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="processes-httpd_ps_rss">
+        <mysql_column_name>web_processes_httpd_ps_rss</mysql_column_name>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="load-load">
+        <mysql_column_name>web_load_@@metric@@</mysql_column_name>
+        <metric>longterm</metric>
+        <metric>shortterm</metric>
+        <metric>midterm</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+    </hostgroup>
+    <hostgroup name="mc">
+      <vertica_plugin name="cpu-idle">
+        <mysql_column_name>mc_cpu_idle</mysql_column_name>
+        <max>100</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="cpu-wait">
+        <mysql_column_name>mc_cpu_iowait</mysql_column_name>
+        <max>100</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="memory_memory-free">
+        <mysql_column_name>mc_mem_free</mysql_column_name>
+        <max>8053063680</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="interface_if_packets-eth0">
+        <mysql_column_name>mc_nw_@@metric@@_pkts</mysql_column_name>
+        <max>1200000</max>
+        <min>0</min>
+        <metric>rx</metric>
+        <metric>tx</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="interface_if_octets-eth0">
+        <mysql_column_name>mc_nw_@@metric@@_bytes</mysql_column_name>
+        <max>30000000</max>
+        <min>0</min>
+        <metric>rx</metric>
+        <metric>tx</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="memcached_memcached_command-set">
+        <mysql_column_name>mc_sets</mysql_column_name>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="memcached_memcached_command-get">
+        <mysql_column_name>mc_gets</mysql_column_name>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="memcached_memcached_connections-">
+        <mysql_column_name>mc_connections</mysql_column_name>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="memcached_memcached_items-curren">
+        <mysql_column_name>mc_current_items</mysql_column_name>
+        <metric>value</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="memcached_memcached_ops-misses">
+        <mysql_column_name>mc_misses</mysql_column_name>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="memcached_memcached_ops-eviction">
+        <mysql_column_name>mc_evictions</mysql_column_name>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="memcached_memcached_ops-hits">
+        <mysql_column_name>mc_hits</mysql_column_name>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+    </hostgroup>
+    <hostgroup name="db">
+      <vertica_plugin name="cpu-idle">
+        <mysql_column_name>db_cpu_idle</mysql_column_name>
+        <max>100</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="cpu-wait">
+        <mysql_column_name>db_cpu_iowait</mysql_column_name>
+        <max>100</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="memory_memory-free">
+        <mysql_column_name>db_mem_free</mysql_column_name>
+        <max>8053063680</max>
+        <min>0</min>
+        <metric>value</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="interface_if_packets-eth0">
+        <mysql_column_name>db_nw_@@metric@@_pkts</mysql_column_name>
+        <max>1200000</max>
+        <min>0</min>
+        <metric>rx</metric>
+        <metric>tx</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="interface_if_octets-eth0">
+        <mysql_column_name>db_nw_@@metric@@_bytes</mysql_column_name>
+        <max>30000000</max>
+        <min>0</min>
+        <metric>rx</metric>
+        <metric>tx</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="disk-md0_disk_ops">
+        <mysql_column_name>db_md0_disk_ops_@@metric@@</mysql_column_name>
+        <metric>read</metric>
+        <metric>write</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="disk-sda1_disk_ops">
+        <mysql_column_name>db_sda1_disk_ops_@@metric@@</mysql_column_name>
+        <metric>read</metric>
+        <metric>write</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="disk-sda1_disk_time">
+        <mysql_column_name>db_sda1_disk_time_@@metric@@</mysql_column_name>
+        <metric>read</metric>
+        <metric>write</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="mysql_mysql_commands-delete">
+        <mysql_column_name>db_mysql_delete</mysql_column_name>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="mysql_mysql_commands-insert">
+        <mysql_column_name>db_mysql_insert</mysql_column_name>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="mysql_mysql_commands-select">
+        <mysql_column_name>db_mysql_select</mysql_column_name>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="mysql_mysql_commands-update">
+        <mysql_column_name>db_mysql_update</mysql_column_name>
+        <metric>value</metric>
+        <value_type>float</value_type>
+      </vertica_plugin>
+    </hostgroup>
+    <hostgroup name="proxy">
+      <vertica_plugin name="interface_if_packets-eth0">
+        <mysql_column_name>proxy_nw_@@metric@@_pkts</mysql_column_name>
+        <max>1200000</max>
+        <min>0</min>
+        <metric>rx</metric>
+        <metric>tx</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+      <vertica_plugin name="interface_if_octets-eth0">
+        <mysql_column_name>proxy_nw_@@metric@@_bytes</mysql_column_name>
+        <max>30000000</max>
+        <min>0</min>
+        <metric>rx</metric>
+        <metric>tx</metric>
+        <value_type>int</value_type>
+      </vertica_plugin>
+    </hostgroup>
+  </game>
+</games>

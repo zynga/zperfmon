@@ -1,0 +1,99 @@
+#!/bin/bash
+
+#
+# Copyright 2013 Zynga Inc.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+# 
+#    http://www.apache.org/licenses/LICENSE-2.0
+# 
+#    Unless required by applicable law or agreed to in writing, software
+#      distributed under the License is distributed on an "AS IS" BASIS,
+#      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
+# 
+
+ARRAY=true
+_GAME=$1
+GAME=$1
+ARRAYID=$2
+
+if [ -z ${GAME} ]; then
+    echo "I need a game name as parameter, aborting."
+    exit
+else
+    echo "Creating DB entries for ${GAME}, I will need root password for mysql"
+fi
+
+if [ -z ${ARRAYID} ]; then
+	echo "This is a new game, not a new array"
+	ARRAY="false"		
+fi 
+
+if [ $ARRAY = true ]; then
+	GAME=$GAME"_"$ARRAYID
+fi
+
+DB_CMDS=`mktemp /tmp/db_create_cmds.XXXXXX`
+
+if [ ! -f "/etc/zperfmon/conf.d/$_GAME.cfg" ]; then
+	echo "Could not find /etc/zperfmon/conf.d/$_GAME.cfg";
+	exit 1
+fi
+
+get_config_key() {
+	KEY=$1;
+	php -r "include '/etc/zperfmon/conf.d/$_GAME.cfg'; \$cfg = \$game_cfg['$_GAME']; echo \$cfg['$KEY'];"
+}
+
+DB_USER=$(get_config_key db_user)
+DB_PASS=$(get_config_key db_pass)
+DB_HOST=$(get_config_key db_host)
+DB_R_USER=$(get_config_key rpt_user)
+DB_R_PASS=$(get_config_key rpt_pass)
+
+DB_CRED="-u ${DB_USER} -p${DB_PASS} -h ${DB_HOST}"
+
+cat > ${DB_CMDS} <<EOF
+
+    CREATE DATABASE IF NOT EXISTS zperfmon_dau;
+    USE zperfmon_dau;
+    CREATE TABLE IF NOT EXISTS dau_5min (
+        time timestamp NOT NULL,
+        snid int(11) NOT NULL,
+        gid int(11) NOT NULL,
+        cid int(11) NOT NULL,
+        dau int(11) NOT NULL,
+        PRIMARY KEY  (time,snid,gid,cid),
+        KEY dau_index (time,snid,gid,cid)
+    );
+
+    CREATE DATABASE IF NOT EXISTS zprf_${GAME};
+
+    USE zprf_${GAME};
+
+EOF
+
+cat ${DB_CMDS}
+
+cat ${DB_CMDS} | mysql ${DB_CRED}
+cat /usr/local/zperfmon/etc/schemas/*.sql | mysql ${DB_CRED} -Dzprf_${GAME}
+
+if [ $? -gt 0 ]; then
+    echo "Failed to create DB zprf_${GAME} or associated user account"
+    rm ${DB_CMDS}
+    exit
+fi
+
+mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_HOST} -Dzprf_${GAME} -e "show tables;"
+
+if [ $? -gt 0 ]; then
+    echo "Failed to create DB zprf_${GAME} or associated user account"
+    rm ${DB_CMDS}
+    exit
+fi
+
+rm ${DB_CMDS}

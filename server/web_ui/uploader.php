@@ -16,7 +16,6 @@
 #    limitations under the License.
 # 
 
-
 include_once 'setup_page.php';
 include_once 'XhProfModel.php';
 include_once 'logger.inc.php';
@@ -166,27 +165,27 @@ function process_xhprof_target($xhprof_target_dir, $logger)
 	}
 	
 	$timestamp = get_timestamp($uploaded_file_name, false);
-//	$target_dir = create_directory($xhprof_target_dir, $timestamp);
-//	if ($target_dir === null) {
-//		$logger->log("uploader","Directory is not created",Logger::CRIT);
-//		header("HTTP/1.1 500 Server error");
-//		echo "Could not create directory $xhprof_target_dir\n";
-//		return;
-//	}	
-	$time_slot = (int)($timestamp / (30 * 60));
-        $target_dir = sprintf($xhprof_target_dir, (string)$time_slot);
+	$target_dir = create_directory($xhprof_target_dir, $timestamp);
+	if ($target_dir === null) {
+		$logger->log("uploader","Directory is not created",Logger::CRIT);
+		header("HTTP/1.1 500 Server error");
+		echo "Could not create directory $xhprof_target_dir\n";
+		return;
+	}	
 
 	$target_file = "$target_dir/{$uploaded_file_name}__{$source_ip}";
+
 	if (move_uploaded_file($tmp_file, $target_file)) {
 		$logger->log("uploader",$target_file." has been uploaded",Logger::INFO);
 		echo "SUCCESS: $target_file has been uploaded<br></br>\n";
+
 		// 
 		// Write the uploaded file name to .profiles for reference to what all files has been uploaded
 		// This will be used while processing.
 		//
 		file_put_contents("$target_dir/.profiles", "{$uploaded_file_name}__{$source_ip},", FILE_APPEND | LOCK_EX); // functions file tag is inserted in-cron
-		touch("$target_dir/.slowpages",time());
-		touch("$target_dir/.apache_stats",time());
+		touch("$target_dir/.slowpages");
+		touch("$target_dir/.apache_stats");
 	} else {
 		$logger->log("uploader","could not move ". $tmp_file . 
 				" to " . $target_file,Logger::ERR);
@@ -216,6 +215,7 @@ function create_directory($dir_name,$timestamp)
 	if (!is_dir($dir_name)  && !mkdir($dir_name, 0777, true)) {
 		return null;
 	}
+
 	umask($oldmask);
 	return $dir_name;
 }
@@ -288,8 +288,8 @@ function cmd_dispatch($server_cfg, $game_cfg, $command)
 
 $target_file = cmd_dispatch($server_cfg, $game_cfg, $_POST["cmd"]);
 
-define('SHADOW_UPDATE_URL', "http://xxxx.xxxx.xxx/zperfmon/uploader.php");
-if(defined('SHADOW_UPDATE_URL')){// && !isset($_GET['shadow'])) {
+//define('SHADOW_UPDATE_URL', "http://xxxx.xxxx.xxx/zperfmon/uploader.php");
+if(defined('SHADOW_UPDATE_URL') && !isset($_GET['shadow'])) {
 	$uploaded_file = basename($_FILES['uploadedfile']['name']);
 	$headers = array(
 		"X-Forwarded-For: ".getRealIpAddr(),

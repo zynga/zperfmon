@@ -2,9 +2,8 @@ FILES=Makefile \
       db_cron/ \
       configs/ \
       web_ui/ \
-      schemas/ \
       scripts/ \
-      CREDITS \
+      schemas/ \
       README \
       zperfmon-server.conf \
       zperfmon-server.spec 
@@ -36,7 +35,7 @@ tarball:
 rpm: tarball
 	rpmbuild -ta $(BUILDROOT)/zperfmon-server.tgz
 
-install: $(INSTALL_ROOT) crons configs schemas webui symlinks scripts 
+install: $(INSTALL_ROOT) crons configs schemas webui symlinks scripts
 
 makedirs: $(INSTALL_ROOT)
 	test -d $(INSTALL_ROOT) || echo "Invalid build root specified - $(INSTALL_ROOT)"
