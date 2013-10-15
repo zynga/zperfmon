@@ -1,10 +1,11 @@
+export SHELL := /bin/bash
+
 FILES=Makefile \
       db_cron/ \
-      configs/ \
       web_ui/ \
       schemas/ \
       scripts/ \
-      CREDITS \
+      ../CREDITS \
       README \
       zperfmon-server.conf \
       zperfmon-server.spec 
@@ -15,7 +16,6 @@ DIRS=/var/www/html/zperfmon/blobs \
      /usr/local/zperfmon/include \
      /usr/local/bin \
      /usr/local/zperfmon/etc/schemas \
-     /usr/local/zperfmon/etc/configs \
      /usr/share/php/zperfmon \
      /etc/cron.d \
      /var/run/zperfmon \
@@ -47,11 +47,10 @@ crons: makedirs
 	cp -rv db_cron/include/ $(INSTALL_ROOT)/usr/local/zperfmon/
 	chmod a+x $(INSTALL_ROOT)/usr/local/zperfmon/bin/*
 	cp -v db_cron/zperfmon-server.cron $(INSTALL_ROOT)/etc/cron.d/zperfmon-server
-	
+
 configs: makedirs
 	cp -rvf db_cron/etc/* $(INSTALL_ROOT)/etc/zperfmon/
 	cp -v web_ui/zperfmon-server.ini $(INSTALL_ROOT)/etc/php.d/
-	cp -v configs/* $(INSTALL_ROOT)/usr/local/zperfmon/etc/configs/
 	cp -v zperfmon-server.conf  $(INSTALL_ROOT)/etc/httpd/conf.d/
 
 schemas: makedirs

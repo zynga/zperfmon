@@ -1,12 +1,11 @@
 FILES=Makefile \
       game_cron/ \
       zxhprof/ \
-      CREDITS \
+      ../CREDITS \
       README \
       zperfmon-client-apache.conf \
       zperfmon-client.spec \
-      zperfmon.ini.sample \
-      create_conf.php 
+      zperfmon.ini
 
 DIRS=/var/opt/zperfmon/xhprof_tbz \
      /usr/share/php/zperfmon \
@@ -56,9 +55,7 @@ apache_conf: makedirs
 	cp -v zperfmon-client-apache.conf ${INSTALL_ROOT}/etc/httpd/conf.d/zperfmon-client.conf
 
 zperfmon_ini: makedirs
-	cp -v zperfmon.ini.sample ${INSTALL_ROOT}/etc/zperfmon/zperfmon.ini.sample
-	cp -v create_conf.php ${INSTALL_ROOT}/usr/share/php/
-	chmod a+x ${INSTALL_ROOT}/usr/share/php/create_conf.php
+	cp -v zperfmon.ini ${INSTALL_ROOT}/etc/zperfmon/zperfmon.ini
 
 htpasswd: makedirs
 	/usr/bin/htpasswd -bc ${INSTALL_ROOT}/usr/local/zperfmon/etc/zperfmon.htpasswd  "3.141592653" "2.718281823"

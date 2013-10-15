@@ -2,7 +2,7 @@
 # Authority: Shankara, Prashun
 %define php_apiver  %((echo 0; php -i 2>/dev/null | sed -n 's/^PHP API => //p') | tail -1)
 %define php_zendabiver %((echo 0; php -i 2>/dev/null | sed -n 's/^PHP Extension => //p') | tail -1)
-%define php_version  %((echo 0; php -i 2>/dev/null | sed -n 's/^PHP Version => //p') | tail -1)
+%define php_version  %((echo 0; php -i 2>/dev/null | sed -n 's/^PHP Version => //p') | tail -1 | tr '-' '_')
 %define php_max_version %((echo 0; php -r "echo implode('.',array_slice(explode('.',phpversion()),0,2)).'.999';") | tail -1)
 
 %define php_extdir %(php-config --extension-dir 2>/dev/null || echo %{_libdir}/php4)
@@ -57,8 +57,6 @@ ${MINUTE} 2 * * * root /usr/local/zperfmon/bin/pullconfig.py &> /dev/null
 HERE
 chown root /etc/cron.d/zperfmon-client
 chmod 0644 /etc/cron.d/zperfmon-client
-/usr/share/php/create_conf.php
-if test $? != 0; then echo "zperfmon.ini file is not created"; fi
 pkill -9 count_page_load; true;
 rm /var/run/apache_mon_pid; true;
 /usr/local/zperfmon/bin/pullconfig.py &> /dev/null; true
@@ -88,9 +86,8 @@ rm /var/run/apache_mon_pid; true;
 /usr/local/zperfmon/bin/
 /usr/local/zperfmon/etc/zperfmon.htpasswd
 /usr/share/php/zperfmon.inc.php
-/usr/share/php/create_conf.php
 /etc/httpd/conf.d/zperfmon-client.conf
-/etc/zperfmon/zperfmon.ini.sample
+/etc/zperfmon/zperfmon.ini
 
 #%ghost /usr/local/zperfmon/bin/perfaggregate.pyc
 #%ghost /usr/local/zperfmon/bin/awk.pyc

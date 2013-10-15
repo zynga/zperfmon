@@ -1,7 +1,7 @@
 # $Id: zperfmon-server.spec 6458 2010-08-30 20:00:02Z prashun $
 # Authority: Shankara, Prashun
 %define php_apiver  %((echo 0; php -i 2>/dev/null | sed -n 's/^PHP API => //p') | tail -1)
-%define php_version  %((echo 0; php -i 2>/dev/null | sed -n 's/^PHP Version => //p') | tail -1)
+%define php_version  %((echo 0; php -i 2>/dev/null | sed -n 's/^PHP Version => //p') | tail -1 | tr '-' '_')
 
 %define php_extdir %(php-config --extension-dir 2>/dev/null || echo %{_libdir}/php4)
 %define _unpackaged_files_terminate_build 0 
@@ -52,16 +52,12 @@ ZPERFMON server is a server-side components which periodically harvest and aggre
 %config(noreplace)/etc/zperfmon/rs.ini
 %config(noreplace)/etc/zperfmon/common_config.yml
 %config(noreplace)/etc/zperfmon/common_config_zcloud.yml
-%config(noreplace)/usr/local/zperfmon/etc/configs/plugin_names.xml
-/etc/zperfmon/server.cfg.sample
 %config(noreplace)/etc/zperfmon/conf.d/game.cfg
 %config(noreplace)/etc/zperfmon/report.ini
 /etc/httpd/conf.d/
 /etc/cron.d/zperfmon-server/
 /usr/local/zperfmon/etc/schemas/
-/usr/local/zperfmon/etc/configs/
 /usr/local/zperfmon/bin/
-#/usr/local/zperfmon/include/lib/
 /usr/local/zperfmon/include/
 /usr/local/bin/
 /var/www/html/zperfmon/
